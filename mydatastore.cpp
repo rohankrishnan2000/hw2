@@ -4,12 +4,20 @@
 
 using namespace std;
 
-
 MyDataStore::MyDataStore()
+{
+}
+MyDataStore::~MyDataStore()
 {
   for(vector<Product*>::iterator it = products_.begin(); it != products_.end(); ++it){
     delete *it;
   }
+
+  for(map<string, User*>::iterator it = users_.begin();
+        it != users_.end();
+        ++it) {
+        delete it->second;
+    }
   
 }
 
@@ -19,7 +27,7 @@ void MyDataStore::addProduct(Product* p)
 
   set<string> keys = p->keywords();
 
-  for(set<string>::iterator it= keys.begin(); it!= key.end(); ++it){
+  for(set<string>::iterator it= keys.begin(); it!= keys.end(); ++it){
     keywordMap_[convToLower(*it)].insert(p);
 
   }
@@ -27,7 +35,7 @@ void MyDataStore::addProduct(Product* p)
 
 void MyDataStore::addUser(User* u)
 {
-  string usernmae = convToLower(u->getName());
+  string username = convToLower(u->getName());
 
   if(users_.find(username) == users_.end()){
     users_[username] = u;
@@ -43,7 +51,7 @@ vector<Product*> MyDataStore::search(vector<string>& terms, int type){
   vector<Product*> result;
 
   if(terms.size() == 0){
-    return result.
+    return result;
   }
   set<Product*> matches;
   
@@ -52,7 +60,7 @@ vector<Product*> MyDataStore::search(vector<string>& terms, int type){
 
     map<string, set<Product*>::iterator first = keywordMap_.find(firstTerm);
 
-    if(first == keywordMap_end()){
+    if(first == keywordMap_.end()){
       return result;
     }
 
@@ -72,14 +80,14 @@ vector<Product*> MyDataStore::search(vector<string>& terms, int type){
     for(unsigned int i = 0; i < terms.size(); i++){
       string term = convToLower(terms[i]);
 
-      map<string, set<Product*>>::iterator it = keywordMap_.find(term);
+      map<string, set<Product*>::iterator it = keywordMap_.find(term);
 
       if(it != keywordMap_.end()){
         matches = setUnion(matches, it->second);
       }
     }
   }
-  for(set<Product*>::iterator it = matches.begin(; it != matches.end(); ++it){
+  for(set<Product*>::iterator it = matches.begin; it != matches.end(); ++it){
   result.push_back(*it)
   }
   return result;
@@ -105,19 +113,20 @@ bool MyDataStore::viewCart(string username)
 {
   username = convToLower(username);
 
-  map<string, User*>::iterator userIt = users_find(username);
+  map<string, User*>::iterator userIt = users_.find(username);
 
   if(userIt == users_.end()){
     return false;
   }
 
-  vector<Prodcut*>& cart = carts_[username];
+  vector<Product*>& cart = carts_[username];
 
   for(unsigned int i = 0; i < cart.size(); i++){
     cout <<"Item " << (i + 1) << endl;
+    cout << cart[i]->displayString() << endl;
 
   }
-  return 
+  return true;
 }
 
 bool MyDataStore::buyCart(string username)
@@ -126,44 +135,50 @@ bool MyDataStore::buyCart(string username)
   map<string, User*>::iterator userIt = users_.find(username);
 
   if(userIt == users_.end()){
-    return false;
+    return false;}
 
     User* user = userIt->second;
     vector<Product*>& cart = carts_[username];
 
     vector<Product*> remaining;
 
-    for(vector<Product*>::iterator it = cart.begin());
+    for(vector<Product*>::iterator it = cart.begin();
     it != cart.end(); ++it){
       Product* product = *it;
 
       if(product->getQty() > 0 && user->getBalance() >= product->getPrice()){
-        product->subractQty(1);
+        product->subtractQty(1);
         user->deductAmount(product->getPrice());
       
       }else{
         remaining.push_back(product);
-      }
+      } 
       cart = remaining;
-      return true;
+      return true;  
     }
+
   }
-}
+
 
 void MyDataStore::dump(ostream& ofile)
 {
-  ofile<< "<products>" << endl;
+    ofile << "<products>" << endl;
 
-  for(vector<Product*>::iterator it = products_.begin()); it != products_.end(); ++it){
-    (*it->dump(ofile));
-  }
-  
-  ofile<< "</products>" << endl;
+    for(vector<Product*>::iterator it = products_.begin();
+        it != products_.end();
+        ++it) {
+        (*it)->dump(ofile);
+    }
 
-  ofile<< "<users>" << endl;
-  for(map<string, User*>::iterator it = users_begin()); it != user_.end(); ++it){
-    it->second->dump(ofile);
-  }
+    ofile << "</products>" << endl;
 
-  ofile << "</users>" << endl;
+    ofile << "<users>" << endl;
+
+    for(map<string, User*>::iterator it = users_.begin();
+        it != users_.end();
+        ++it) {
+        it->second->dump(ofile);
+    }
+
+    ofile << "</users>" << endl;
 }

@@ -33,15 +33,15 @@ set<string> Book::keywords() const
   return keys;
 }
 
-string Book:displayString() const
+string Book::displayString() const
 {
   stringstream ss;
   
   ss << name_ << endl;
   ss << "Author: " << author_
-  << "ISB: " <<isbn_ << endl;
+  << " ISBN: " <<isbn_ << endl;
 
-  s<< fixed <<setprecision(2)
+  ss << fixed <<setprecision(2)
   << price_ << " "
   << qty_ <<" left.";
 
@@ -54,3 +54,6 @@ void Book::dump(ostream& os) const
   os << isbn_ << endl;
   os << author_ << endl;
 }
+
+
+

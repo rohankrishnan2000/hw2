@@ -1,3 +1,11 @@
+#ifndef MOVIE_H
+#define MOVIE_H
+
+#include "product.h"
+#include <string>
+#include <set>
+
+
 class Movie : public Product
 {
   public:
@@ -12,7 +20,7 @@ class Movie : public Product
 
 
     std::set<std::string> keywords() const;
-    std::striing displayString() const;
+    std::string displayString() const;
     void dump(std::ostream& os) const;
 
     private:

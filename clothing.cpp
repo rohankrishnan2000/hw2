@@ -36,10 +36,10 @@ string Clothing::displayString() const
   stringstream ss;
 
   ss << name_ << endl;
-  ss << "Size: " << size_ << "Brand: " << brand_ << endl;
-  ss << fixed << setprecision(2) << price_ << " " <<qty << " left.";
+  ss << "Size: " << size_ << " Brand: " << brand_ << endl;
+  ss << fixed << setprecision(2) << price_ << " " <<qty_ << " left.";
 
-  reutrn ss.str()
+  reutrn ss.str();
 }
 
 void Clothing::dump(ostream& os) const

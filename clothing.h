@@ -25,6 +25,6 @@ class Clothing : public Product
       std::string size_;
       std::string brand_;
 
-}
+};
 
 #endif

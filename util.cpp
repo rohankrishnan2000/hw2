@@ -24,7 +24,7 @@ std::set<std::string> parseStringToWords(string rawWords)
 
     if(ispunct(ch) || isspace(ch)){
       if(current.size() >= 2){
-        words.insert(convToLower(current))
+        words.insert(convToLower(current));
       }
       current = "";
     }

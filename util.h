@@ -23,13 +23,15 @@ while(it1!= s1.end() && it2 != s2.end()){
   if(*it1 < *it2){
     ++it1;
   }
-  else if(*it2 <*it1{
-    ++it1;
+  else if(*it2 <*it1){
+    ++it2;
 
   }else{
     result.insert(*it1);
     ++it1;
+    ++it2;
   }
+  return result;
 }
 
 

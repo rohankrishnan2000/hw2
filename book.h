@@ -17,4 +17,13 @@ class Book : public Product
         const std::string isbn,
         const std::string author);
     virtual ~Book();
-}
+    std::set<std::string> keywords() const;
+    std::string displayString() const;
+    void dump(std::ostream& os) const;
+
+private:
+    std::string isbn_;
+    std::string author_;
+
+
+};

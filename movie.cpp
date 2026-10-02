@@ -13,7 +13,7 @@ Movie::Movie(const std::string category,
             int qty,
             const std::string genre,
             const std::string rating):
-            Product(category, name, price, qty).
+            Product(category, name, price, qty),
             genre_(genre),
             rating_(rating)
 {}
@@ -23,7 +23,7 @@ Movie::~Movie()
 {
 }
 
-set<string> Movie::keywrods() const
+set<string> Movie::keywords() const
 {
   set<string> keys = parseStringToWords(name_);
   keys.insert(convToLower(genre_));
