@@ -26,6 +26,6 @@ class Movie : public Product
     private:
       std::string genre_;
       std::string rating_;
-}
+};
 
 #endif

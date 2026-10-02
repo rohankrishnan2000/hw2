@@ -31,11 +31,8 @@ while(it1!= s1.end() && it2 != s2.end()){
     ++it1;
     ++it2;
   }
-  return result;
 }
-
-
-
+ return result;
 }
 template <typename T>
 std::set<T> setUnion(std::set<T>& s1, std::set<T>& s2)

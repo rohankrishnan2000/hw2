@@ -58,7 +58,7 @@ vector<Product*> MyDataStore::search(vector<string>& terms, int type){
   if(type == 0){
     string firstTerm = convToLower(terms[0]);
 
-    map<string, set<Product*>::iterator first = keywordMap_.find(firstTerm);
+    map<string, set<Product*> >::iterator first = keywordMap_.find(firstTerm);
 
     if(first == keywordMap_.end()){
       return result;
@@ -67,7 +67,7 @@ vector<Product*> MyDataStore::search(vector<string>& terms, int type){
     matches = first->second;
     for(unsigned int i = 1; i <terms.size(); i++){
       string term = convToLower(terms[i]);
-      map<string, set<Product*>::iterator it = keywordMap_.find(term);
+      map<string, set<Product*> >::iterator it = keywordMap_.find(term);
 
       if(it == keywordMap_.end()){
         matches.clear();
@@ -80,15 +80,15 @@ vector<Product*> MyDataStore::search(vector<string>& terms, int type){
     for(unsigned int i = 0; i < terms.size(); i++){
       string term = convToLower(terms[i]);
 
-      map<string, set<Product*>::iterator it = keywordMap_.find(term);
+      map<string, set<Product*>>::iterator it = keywordMap_.find(term);
 
       if(it != keywordMap_.end()){
         matches = setUnion(matches, it->second);
       }
     }
   }
-  for(set<Product*>::iterator it = matches.begin; it != matches.end(); ++it){
-  result.push_back(*it)
+  for(set<Product*>::iterator it = matches.begin(); it != matches.end(); ++it){
+  result.push_back(*it);
   }
   return result;
 }
@@ -131,11 +131,13 @@ bool MyDataStore::viewCart(string username)
 
 bool MyDataStore::buyCart(string username)
 {
-  username = convToLower(username);
-  map<string, User*>::iterator userIt = users_.find(username);
+    username = convToLower(username);
 
-  if(userIt == users_.end()){
-    return false;}
+    map<string, User*>::iterator userIt = users_.find(username);
+
+    if(userIt == users_.end()) {
+        return false;
+    }
 
     User* user = userIt->second;
     vector<Product*>& cart = carts_[username];
@@ -143,21 +145,26 @@ bool MyDataStore::buyCart(string username)
     vector<Product*> remaining;
 
     for(vector<Product*>::iterator it = cart.begin();
-    it != cart.end(); ++it){
-      Product* product = *it;
+        it != cart.end();
+        ++it) {
 
-      if(product->getQty() > 0 && user->getBalance() >= product->getPrice()){
-        product->subtractQty(1);
-        user->deductAmount(product->getPrice());
-      
-      }else{
-        remaining.push_back(product);
-      } 
-      cart = remaining;
-      return true;  
+        Product* product = *it;
+
+        if(product->getQty() > 0 &&
+           user->getBalance() >= product->getPrice()) {
+
+            product->subtractQty(1);
+            user->deductAmount(product->getPrice());
+        }
+        else {
+            remaining.push_back(product);
+        }
     }
 
-  }
+    cart = remaining;
+
+    return true;
+}
 
 
 void MyDataStore::dump(ostream& ofile)

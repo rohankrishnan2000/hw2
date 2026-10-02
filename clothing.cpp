@@ -39,7 +39,7 @@ string Clothing::displayString() const
   ss << "Size: " << size_ << " Brand: " << brand_ << endl;
   ss << fixed << setprecision(2) << price_ << " " <<qty_ << " left.";
 
-  reutrn ss.str();
+  return ss.str();
 }
 
 void Clothing::dump(ostream& os) const

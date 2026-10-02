@@ -7,7 +7,7 @@
 #include <set> 
 #include <string>
 
-class MyDataStore : public Datastore
+class MyDataStore : public DataStore
 {
   public:
     MyDataStore();
