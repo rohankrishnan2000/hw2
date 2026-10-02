@@ -34,8 +34,6 @@ int main(int argc, char* argv[])
      ****************/
     MyDataStore ds;
 
-
-
     // Instantiate the individual section and product parsers we want
     ProductSectionParser* productSectionParser = new ProductSectionParser;
     productSectionParser->addProductParser(new ProductBookParser);
@@ -153,8 +151,6 @@ int main(int argc, char* argv[])
             }
 
             /* Add support for other commands here */
-
-
             else {
                 cout << "Unknown command" << endl;
             }

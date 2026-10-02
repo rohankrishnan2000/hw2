@@ -10,12 +10,10 @@ Product::Product(const std::string category, const std::string name, double pric
     qty_(qty),
     category_(category)
 {
-
 }
 
 Product::~Product()
 {
-
 }
 
 
@@ -52,6 +50,3 @@ void Product::dump(std::ostream& os) const
 {
     os << category_ << "\n" << name_ << "\n" << price_ << "\n" << qty_ << endl;
 }
-
-
-
